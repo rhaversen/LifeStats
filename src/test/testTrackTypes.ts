@@ -34,5 +34,29 @@ export const testTrackTypes = {
     NEW_TRACK: {
         title: 'New track',
         dataFields: {}
+    },
+    DATA_TRACK_1: {
+        title: 'Data track',
+        dataFields: {
+            dataField1: Number,
+            dataField2: String,
+            dataField3: Boolean
+        }
+    },
+    DATA_TRACK_2: {
+        title: 'Data track',
+        dataFields: {
+            dataField1: ['Low', 'Medium', 'High']
+        }
+    },
+    DATA_TRACK_3: {
+        title: 'Data track',
+        dataFields: {
+            dataField1: [1, 2, 3, 4, 5]
+        }
+    },
+    NO_DATA_TRACK: {
+        title: 'No data track',
+        dataFields: {}
     }
 }
