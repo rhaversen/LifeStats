@@ -14,7 +14,7 @@ const trackTypes = trackTypesModule.trackTypes
 export interface ITrack extends Document {
     // Properties
     _id: Types.ObjectId
-    trackName: string
+    trackName: keyof typeof trackTypes // The name of the track
     date: Date // The date the track took place
     duration?: number // The duration of the track in minutes
     userId: Types.ObjectId // The user who created the track
