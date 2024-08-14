@@ -55,6 +55,12 @@ export const testTrackTypes = {
             dataField1: [1, 2, 3, 4, 5]
         }
     },
+    DATA_TRACK_4: {
+        title: 'Data track',
+        dataFields: {
+            dataField1: { min: 1, max: 5 }
+        }
+    },
     NO_DATA_TRACK: {
         title: 'No data track',
         dataFields: {}
