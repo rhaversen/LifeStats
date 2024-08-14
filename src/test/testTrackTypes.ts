@@ -1,29 +1,38 @@
 export const testTrackTypes = {
     TEST_TRACK: {
-        allowedKeys: {}
+        title: 'Test track',
+        dataFields: {}
     },
     TEST_TRACK_A1: {
-        allowedKeys: {}
+        title: 'Test track a1',
+        dataFields: {}
     },
     TEST_TRACK_A2: {
-        allowedKeys: {}
+        title: 'Test track a2',
+        dataFields: {}
     },
     TEST_TRACK_A3: {
-        allowedKeys: {}
+        title: 'Test track a3',
+        dataFields: {}
     },
     TEST_TRACK_B1: {
-        allowedKeys: {}
+        title: 'Test track b1',
+        dataFields: {}
     },
     TEST_TRACK_B2: {
-        allowedKeys: {}
+        title: 'Test track b2',
+        dataFields: {}
     },
     EARLIER_DATE_TRACK: {
-        allowedKeys: {}
+        title: 'Earlier date track',
+        dataFields: {}
     },
     OTHER_TRACK: {
-        allowedKeys: {}
+        title: 'Other track',
+        dataFields: {}
     },
     NEW_TRACK: {
-        allowedKeys: {}
+        title: 'New track',
+        dataFields: {}
     }
 }
