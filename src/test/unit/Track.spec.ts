@@ -175,7 +175,7 @@ describe('Track Model', function () {
                 trackName: 'DATA_TRACK_1',
                 userId: user._id,
                 data: {
-                    dataField1: true
+                    dataField3: true
                 }
             })
             await track.save()
@@ -184,7 +184,7 @@ describe('Track Model', function () {
             })
         })
 
-        it('should allow valid data with number min/max', async function () {
+        it('should allow valid data with min/max', async function () {
             const track = new TrackModel({
                 trackName: 'DATA_TRACK_4',
                 userId: user._id,
@@ -198,7 +198,7 @@ describe('Track Model', function () {
             })
         })
 
-        it('should allow partial data', async function () {
+        it('should allow partial data with number', async function () {
             const track = new TrackModel({
                 trackName: 'DATA_TRACK_1',
                 userId: user._id,
@@ -371,10 +371,10 @@ describe('Track Model', function () {
             let errorOccurred = false
             try {
                 const track = new TrackModel({
-                    trackName: 'DATA_TRACK_2',
+                    trackName: 'DATA_TRACK_1',
                     userId: user._id,
                     data: {
-                        dataField1: 1
+                        dataField2: 1
                     }
                 })
                 await track.save()
@@ -388,10 +388,10 @@ describe('Track Model', function () {
             let errorOccurred = false
             try {
                 const track = new TrackModel({
-                    trackName: 'DATA_TRACK_2',
+                    trackName: 'DATA_TRACK_1',
                     userId: user._id,
                     data: {
-                        dataField1: true
+                        dataField2: true
                     }
                 })
                 await track.save()
@@ -408,7 +408,7 @@ describe('Track Model', function () {
                     trackName: 'DATA_TRACK_1',
                     userId: user._id,
                     data: {
-                        dataField1: 1
+                        dataField3: 1
                     }
                 })
                 await track.save()
@@ -425,7 +425,7 @@ describe('Track Model', function () {
                     trackName: 'DATA_TRACK_1',
                     userId: user._id,
                     data: {
-                        dataField1: 'string'
+                        dataField3: 'string'
                     }
                 })
                 await track.save()
