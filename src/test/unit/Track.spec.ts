@@ -255,215 +255,279 @@ describe('Track Model', function () {
         })
 
         it('should not allow number below min', async function () {
-            const track = new TrackModel({
-                trackName: 'DATA_TRACK_4',
-                userId: user._id,
-                data: {
-                    dataField1: 0
-                }
-            })
-            await track.save().catch((err) => {
-                expect(err).to.not.be.null
-            })
+            let errorOccurred = false
+            try {
+                const track = new TrackModel({
+                    trackName: 'DATA_TRACK_4',
+                    userId: user._id,
+                    data: {
+                        dataField1: 0
+                    }
+                })
+                await track.save()
+            } catch (err) {
+                errorOccurred = true
+            }
+            expect(errorOccurred).to.be.true
         })
 
         it('should not allow number above max', async function () {
-            const track = new TrackModel({
-                trackName: 'DATA_TRACK_4',
-                userId: user._id,
-                data: {
-                    dataField1: 6
-                }
-            })
-            await track.save().catch((err) => {
-                expect(err).to.not.be.null
-            })
+            let errorOccurred = false
+            try {
+                const track = new TrackModel({
+                    trackName: 'DATA_TRACK_4',
+                    userId: user._id,
+                    data: {
+                        dataField1: 6
+                    }
+                })
+                await track.save()
+            } catch (err) {
+                errorOccurred = true
+            }
+            expect(errorOccurred).to.be.true
         })
 
         it('should not allow multiple enum values', async function () {
-            const track = new TrackModel({
-                trackName: 'DATA_TRACK_2',
-                userId: user._id,
-                data: {
-                    dataField1: ['Low', 'High']
-                }
-            })
-            await track.save().catch((err) => {
-                expect(err).to.not.be.null
-            })
+            let errorOccurred = false
+            try {
+                const track = new TrackModel({
+                    trackName: 'DATA_TRACK_2',
+                    userId: user._id,
+                    data: {
+                        dataField1: ['Low', 'High']
+                    }
+                })
+                await track.save()
+            } catch (err) {
+                errorOccurred = true
+            }
+            expect(errorOccurred).to.be.true
         })
 
         it('should not allow string in number', async function () {
-            const track = new TrackModel({
-                trackName: 'DATA_TRACK_1',
-                userId: user._id,
-                data: {
-                    dataField1: 'string'
-                }
-            })
-            await track.save().catch((err) => {
-                expect(err).to.not.be.null
-            })
+            let errorOccurred = false
+            try {
+                const track = new TrackModel({
+                    trackName: 'DATA_TRACK_1',
+                    userId: user._id,
+                    data: {
+                        dataField1: 'string'
+                    }
+                })
+                await track.save()
+            } catch (err) {
+                errorOccurred = true
+            }
+            expect(errorOccurred).to.be.true
         })
 
         it('should not allow boolean in number', async function () {
-            const track = new TrackModel({
-                trackName: 'DATA_TRACK_1',
-                userId: user._id,
-                data: {
-                    dataField1: true
-                }
-            })
-            await track.save().catch((err) => {
-                expect(err).to.not.be.null
-            })
+            let errorOccurred = false
+            try {
+                const track = new TrackModel({
+                    trackName: 'DATA_TRACK_1',
+                    userId: user._id,
+                    data: {
+                        dataField1: true
+                    }
+                })
+                await track.save()
+            } catch (err) {
+                errorOccurred = true
+            }
+            expect(errorOccurred).to.be.true
         })
 
         it('should not allow number in string', async function () {
-            const track = new TrackModel({
-                trackName: 'DATA_TRACK_2',
-                userId: user._id,
-                data: {
-                    dataField1: 1
-                }
-            })
-            await track.save().catch((err) => {
-                expect(err).to.not.be.null
-            })
+            let errorOccurred = false
+            try {
+                const track = new TrackModel({
+                    trackName: 'DATA_TRACK_2',
+                    userId: user._id,
+                    data: {
+                        dataField1: 1
+                    }
+                })
+                await track.save()
+            } catch (err) {
+                errorOccurred = true
+            }
+            expect(errorOccurred).to.be.true
         })
 
         it('should not allow boolean in string', async function () {
-            const track = new TrackModel({
-                trackName: 'DATA_TRACK_2',
-                userId: user._id,
-                data: {
-                    dataField1: true
-                }
-            })
-            await track.save().catch((err) => {
-                expect(err).to.not.be.null
-            })
+            let errorOccurred = false
+            try {
+                const track = new TrackModel({
+                    trackName: 'DATA_TRACK_2',
+                    userId: user._id,
+                    data: {
+                        dataField1: true
+                    }
+                })
+                await track.save()
+            } catch (err) {
+                errorOccurred = true
+            }
+            expect(errorOccurred).to.be.true
         })
 
         it('should not allow number in boolean', async function () {
-            const track = new TrackModel({
-                trackName: 'DATA_TRACK_1',
-                userId: user._id,
-                data: {
-                    dataField1: 1
-                }
-            })
-            await track.save().catch((err) => {
-                expect(err).to.not.be.null
-            })
+            let errorOccurred = false
+            try {
+                const track = new TrackModel({
+                    trackName: 'DATA_TRACK_1',
+                    userId: user._id,
+                    data: {
+                        dataField1: 1
+                    }
+                })
+                await track.save()
+            } catch (err) {
+                errorOccurred = true
+            }
+            expect(errorOccurred).to.be.true
         })
 
         it('should not allow string in boolean', async function () {
-            const track = new TrackModel({
-                trackName: 'DATA_TRACK_1',
-                userId: user._id,
-                data: {
-                    dataField1: 'string'
-                }
-            })
-            await track.save().catch((err) => {
-                expect(err).to.not.be.null
-            })
+            let errorOccurred = false
+            try {
+                const track = new TrackModel({
+                    trackName: 'DATA_TRACK_1',
+                    userId: user._id,
+                    data: {
+                        dataField1: 'string'
+                    }
+                })
+                await track.save()
+            } catch (err) {
+                errorOccurred = true
+            }
+            expect(errorOccurred).to.be.true
         })
 
         it('should not allow string in min/max', async function () {
-            const track = new TrackModel({
-                trackName: 'DATA_TRACK_4',
-                userId: user._id,
-                data: {
-                    dataField1: 'string'
-                }
-            })
-            await track.save().catch((err) => {
-                expect(err).to.not.be.null
-            })
+            let errorOccurred = false
+            try {
+                const track = new TrackModel({
+                    trackName: 'DATA_TRACK_4',
+                    userId: user._id,
+                    data: {
+                        dataField1: 'string'
+                    }
+                })
+                await track.save()
+            } catch (err) {
+                errorOccurred = true
+            }
+            expect(errorOccurred).to.be.true
         })
 
         it('should not allow number in min/max', async function () {
-            const track = new TrackModel({
-                trackName: 'DATA_TRACK_4',
-                userId: user._id,
-                data: {
-                    dataField1: 1
-                }
-            })
-            await track.save().catch((err) => {
-                expect(err).to.not.be.null
-            })
+            let errorOccurred = false
+            try {
+                const track = new TrackModel({
+                    trackName: 'DATA_TRACK_4',
+                    userId: user._id,
+                    data: {
+                        dataField1: 1
+                    }
+                })
+                await track.save()
+            } catch (err) {
+                errorOccurred = true
+            }
+            expect(errorOccurred).to.be.true
         })
 
         it('should not allow boolean in min/max', async function () {
-            const track = new TrackModel({
-                trackName: 'DATA_TRACK_4',
-                userId: user._id,
-                data: {
-                    dataField1: true
-                }
-            })
-            await track.save().catch((err) => {
-                expect(err).to.not.be.null
-            })
+            let errorOccurred = false
+            try {
+                const track = new TrackModel({
+                    trackName: 'DATA_TRACK_4',
+                    userId: user._id,
+                    data: {
+                        dataField1: true
+                    }
+                })
+                await track.save()
+            } catch (err) {
+                errorOccurred = true
+            }
+            expect(errorOccurred).to.be.true
         })
 
         it('should not allow invalid data field', async function () {
-            const track = new TrackModel({
-                trackName: 'DATA_TRACK_1',
-                userId: user._id,
-                data: {
-                    invalidDataField: 'test'
-                }
-            })
-            await track.save().catch((err) => {
-                expect(err).to.not.be.null
-            })
+            let errorOccurred = false
+            try {
+                const track = new TrackModel({
+                    trackName: 'DATA_TRACK_1',
+                    userId: user._id,
+                    data: {
+                        invalidDataField: 'test'
+                    }
+                })
+                await track.save()
+            } catch (err) {
+                errorOccurred = true
+            }
+            expect(errorOccurred).to.be.true
         })
 
         it('should not allow valid data with invalid trackName', async function () {
-            const track = new TrackModel({
-                trackName: 'INVALID_TRACK_NAME_ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-                userId: user._id,
-                data: {
-                    dataField1: 1,
-                    dataField2: 'string',
-                    dataField3: true
-                }
-            })
-            await track.save().catch((err) => {
-                expect(err).to.not.be.null
-            })
+            let errorOccurred = false
+            try {
+                const track = new TrackModel({
+                    trackName: 'INVALID_TRACK_NAME_ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+                    userId: user._id,
+                    data: {
+                        dataField1: 1,
+                        dataField2: 'string',
+                        dataField3: true
+                    }
+                })
+                await track.save()
+            } catch (err) {
+                errorOccurred = true
+            }
+            expect(errorOccurred).to.be.true
         })
 
         it('should not allow invalid data with valid trackName', async function () {
-            const track = new TrackModel({
-                trackName: 'DATA_TRACK_1',
-                userId: user._id,
-                data: {
-                    invalidDataField: 'test'
-                }
-            })
-            await track.save().catch((err) => {
-                expect(err).to.not.be.null
-            })
+            let errorOccurred = false
+            try {
+                const track = new TrackModel({
+                    trackName: 'DATA_TRACK_1',
+                    userId: user._id,
+                    data: {
+                        invalidDataField: 'test'
+                    }
+                })
+                await track.save()
+            } catch (err) {
+                errorOccurred = true
+            }
+            expect(errorOccurred).to.be.true
         })
 
         it('should not allow valid data with invalid data', async function () {
-            const track = new TrackModel({
-                trackName: 'DATA_TRACK_1',
-                userId: user._id,
-                data: {
-                    dataField1: 'string',
-                    dataField2: 'string',
-                    dataField3: 'string'
-                }
-            })
-            await track.save().catch((err) => {
-                expect(err).to.not.be.null
-            })
+            let errorOccurred = false
+            try {
+                const track = new TrackModel({
+                    trackName: 'DATA_TRACK_1',
+                    userId: user._id,
+                    data: {
+                        dataField1: 'string',
+                        dataField2: 'string',
+                        dataField3: 'string'
+                    }
+                })
+                await track.save()
+            } catch (err) {
+                errorOccurred = true
+            }
+            expect(errorOccurred).to.be.true
         })
     })
 })
