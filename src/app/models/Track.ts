@@ -77,7 +77,9 @@ function validateData (trackName: ITrack['trackName'], data?: Map<string, unknow
 
     // Retrieve the data fields specification for the given track type
     const fields = trackTypes[trackName]?.dataFields
-    if (Object.keys(fields).length === 0) return data.size === 0 // If no dataFields defined, only empty data is valid
+
+    // If no dataFields defined, only empty data is valid
+    if (Object.keys(fields).length === 0) return data.size === 0
 
     // Validate each data field against its specification
     for (const [key, value] of data) {
@@ -85,24 +87,29 @@ function validateData (trackName: ITrack['trackName'], data?: Map<string, unknow
         if (typeof spec === 'undefined') return false // Field not defined in specification
 
         if (spec instanceof Array) {
-            // Handle enum type, including boolean enums
+            // Handle array type
             if (!spec.includes(value)) return false
         } else if (spec === Number) {
+            // Handle number type
             if (typeof value !== 'number') return false
         } else if (spec === String) {
+            // Handle string type
             if (typeof value !== 'string') return false
         } else if (spec === Boolean) {
+            // Handle boolean type
             if (typeof value !== 'boolean') return false
-        } else {
-            // Object type specifications possibly with min/max
-            if (typeof spec === 'object' && (spec.min !== undefined || spec.max !== undefined)) {
+        } else if (typeof spec === 'object') {
+            // Handle number type with min and max
+            if (spec.min !== undefined && spec.max !== undefined) {
                 if (typeof value !== 'number') return false
-                if (spec.min !== undefined && value < spec.min) return false
-                if (spec.max !== undefined && value > spec.max) return false
+                if (value < spec.min || value > spec.max) return false
             } else {
-                // Unexpected specification type
+                // Unexpected object type
                 return false
             }
+        } else {
+            // Unexpected specification type
+            return false
         }
     }
 
