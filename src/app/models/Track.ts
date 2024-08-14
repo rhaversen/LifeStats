@@ -75,37 +75,38 @@ function validateData (trackName: ITrack['trackName'], data?: Map<string, unknow
     // No data is always valid
     if (data === undefined || data === null) return true
 
-    const fields: Record<string, any> = trackTypes[trackName]
+    // Retrieve the data fields specification for the given track type
+    const fields = trackTypes[trackName]?.dataFields
+    if (Object.keys(fields).length === 0) return data.size === 0 // If no dataFields defined, only empty data is valid
 
-    if (Object.keys(fields).length === 0) {
-        logger.debug('No data track type found for:', trackName)
-        return false
-    }
+    // Validate each data field against its specification
+    for (const [key, value] of data) {
+        const spec = fields[key]
+        if (typeof spec === 'undefined') return false // Field not defined in specification
 
-    for (const key in data) {
-        if (key.startsWith('$') || key.startsWith('_')) {
-            // Ignore internal and metadata fields
-            continue
-        }
-        if (!(key in fields)) {
-            logger.debug('Invalid data field:', key)
-            return false
-        }
-        const fieldType = fields[key]
-        const value = data.get(key)
-
-        if (Array.isArray(fieldType)) {
-            if (!fieldType.includes(value)) {
-                logger.debug('Value', value, 'not allowed for field', key)
+        if (spec instanceof Array) {
+            // Handle enum type, including boolean enums
+            if (!spec.includes(value)) return false
+        } else if (spec === Number) {
+            if (typeof value !== 'number') return false
+        } else if (spec === String) {
+            if (typeof value !== 'string') return false
+        } else if (spec === Boolean) {
+            if (typeof value !== 'boolean') return false
+        } else {
+            // Object type specifications possibly with min/max
+            if (typeof spec === 'object' && (spec.min !== undefined || spec.max !== undefined)) {
+                if (typeof value !== 'number') return false
+                if (spec.min !== undefined && value < spec.min) return false
+                if (spec.max !== undefined && value > spec.max) return false
+            } else {
+                // Unexpected specification type
                 return false
             }
-        } else if (typeof value !== typeof fieldType) {
-            logger.debug('Type mismatch for field', key, ': expected', fieldType, ', got', typeof value)
-            return false
         }
     }
 
-    // Data is valid
+    // All checks passed
     return true
 }
 
