@@ -1,5 +1,6 @@
 export const trackTypes = {
     TEST_TRACK: {
+        title: 'Test track',
         dataFields: {}
     },
     CONSUMED_WATER: {
