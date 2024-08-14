@@ -180,7 +180,7 @@ describe('Track Model', function () {
             })
             await track.save()
             expect(Object.fromEntries(track.data as Map<string, unknown>)).to.deep.equal({
-                dataField1: true
+                dataField3: true
             })
         })
 
