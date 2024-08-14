@@ -1,4 +1,16 @@
-export const trackTypes = {
+type DataFieldSpecification =
+    | { min?: number, max?: number }
+    | NumberConstructor
+    | StringConstructor
+    | BooleanConstructor
+    | readonly unknown[]
+
+interface TrackType {
+    title: string
+    dataFields: Record<string, DataFieldSpecification>
+}
+
+export const trackTypes: Record<string, TrackType> = {
     TEST_TRACK: {
         title: 'Test track',
         dataFields: {}
@@ -171,4 +183,4 @@ export const trackTypes = {
             caloriesBurned: Number
         }
     }
-} as const
+}
