@@ -70,22 +70,16 @@ trackSchema.pre('save', function (next) {
 })
 
 // Adding validation to data
-trackSchema.path('data').validate(function () {
-    validateTrackNameAndData(this.trackName, this.data)
+trackSchema.path('data').validate(function (this: ITrack) {
+    return validateData(this.trackName, this.data)
 }, 'Data is not valid')
 
-export function validateTrackNameAndData (trackName: string, data?: Record<string, unknown>): boolean {
-    // Check if the trackName is a valid track type
-    if (!Object.keys(trackTypes).includes(trackName)) return false
-
-    // Assert that trackName is a valid key of trackTypes (TypeScript does not know that the trackName has been determined to be a valid key of trackType)
-    const trackNameKey = trackName as keyof typeof trackTypes
-
+export function validateData (trackName: ITrack['trackName'], data?: Record<string, unknown>): boolean {
     // No data is always valid data
     if (data === undefined || data === null) return true
 
     // Get the allowed keys for the track type
-    const allowedKeys = trackTypes[trackNameKey].dataFields as Record<string, unknown>
+    const allowedKeys = trackTypes[trackName].dataFields as Record<string, unknown>
 
     // Check if the data has the allowed keys and the correct types
     for (const key in data) {
