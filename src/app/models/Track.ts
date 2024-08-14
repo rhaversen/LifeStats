@@ -18,7 +18,7 @@ export interface ITrack extends Document {
     date: Date // The date the track took place
     duration?: number // The duration of the track in minutes
     userId: Types.ObjectId // The user who created the track
-    data?: Record<string, unknown> // The data of the track (A single track)
+    data?: Map<string, unknown> // The data of the track (A single track)
 
     // Timestamps
     createdAt: Date
