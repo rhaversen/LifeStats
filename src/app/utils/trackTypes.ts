@@ -154,7 +154,7 @@ export const trackTypes = {
     TINNITUS: {
         title: 'Tinnitus',
         dataFields: {
-            highPitch: Boolean
+            pitch: ['Low', 'Medium', 'High']
         }
     },
     WORKOUT: {
