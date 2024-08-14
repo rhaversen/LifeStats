@@ -23,9 +23,6 @@ export interface ITrack extends Document {
     // Timestamps
     createdAt: Date
     updatedAt: Date
-
-    // Methods
-    validateTrackNameAndData: (trackName: string, data?: Record<string, unknown>) => boolean
 }
 
 const trackSchema = new Schema<ITrack>({
@@ -74,19 +71,38 @@ trackSchema.path('data').validate(function (this: ITrack) {
     return validateData(this.trackName, this.data)
 }, 'Data is not valid')
 
-export function validateData (trackName: ITrack['trackName'], data?: Record<string, unknown>): boolean {
-    // No data is always valid data
+function validateData (trackName: ITrack['trackName'], data?: Map<string, unknown>): boolean {
+    // No data is always valid
     if (data === undefined || data === null) return true
 
-    // Get the allowed keys for the track type
-    const allowedKeys = trackTypes[trackName].dataFields as Record<string, unknown>
+    const fields: Record<string, any> = trackTypes[trackName]
 
-    // Check if the data has the allowed keys and the correct types
+    if (Object.keys(fields).length === 0) {
+        logger.debug('No data track type found for:', trackName)
+        return false
+    }
+
     for (const key in data) {
-        // Check if key is allowed
-        if (!Object.keys(allowedKeys).includes(key)) return false
-        // Check if the type is correct
-        if (typeof data[key] !== typeof allowedKeys[key]) return false
+        if (key.startsWith('$') || key.startsWith('_')) {
+            // Ignore internal and metadata fields
+            continue
+        }
+        if (!(key in fields)) {
+            logger.debug('Invalid data field:', key)
+            return false
+        }
+        const fieldType = fields[key]
+        const value = data.get(key)
+
+        if (Array.isArray(fieldType)) {
+            if (!fieldType.includes(value)) {
+                logger.debug('Value', value, 'not allowed for field', key)
+                return false
+            }
+        } else if (typeof value !== typeof fieldType) {
+            logger.debug('Type mismatch for field', key, ': expected', fieldType, ', got', typeof value)
+            return false
+        }
     }
 
     // Data is valid
