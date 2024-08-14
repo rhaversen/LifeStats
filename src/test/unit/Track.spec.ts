@@ -212,6 +212,34 @@ describe('Track Model', function () {
             })
         })
 
+        it('should allow partial data with string', async function () {
+            const track = new TrackModel({
+                trackName: 'DATA_TRACK_1',
+                userId: user._id,
+                data: {
+                    dataField2: 'string'
+                }
+            })
+            await track.save()
+            expect(Object.fromEntries(track.data as Map<string, unknown>)).to.deep.equal({
+                dataField2: 'string'
+            })
+        })
+
+        it('should allow partial data with boolean', async function () {
+            const track = new TrackModel({
+                trackName: 'DATA_TRACK_1',
+                userId: user._id,
+                data: {
+                    dataField3: true
+                }
+            })
+            await track.save()
+            expect(Object.fromEntries(track.data as Map<string, unknown>)).to.deep.equal({
+                dataField3: true
+            })
+        })
+
         it('should allow data with string enum', async function () {
             const track = new TrackModel({
                 trackName: 'DATA_TRACK_2',
@@ -521,6 +549,25 @@ describe('Track Model', function () {
                         dataField1: 'string',
                         dataField2: 'string',
                         dataField3: 'string'
+                    }
+                })
+                await track.save()
+            } catch (err) {
+                errorOccurred = true
+            }
+            expect(errorOccurred).to.be.true
+        })
+
+        it('should not allow data with no data trackType', async function () {
+            let errorOccurred = false
+            try {
+                const track = new TrackModel({
+                    trackName: 'NO_DATA_TRACK',
+                    userId: user._id,
+                    data: {
+                        dataField1: 1,
+                        dataField2: 'string',
+                        dataField3: true
                     }
                 })
                 await track.save()
