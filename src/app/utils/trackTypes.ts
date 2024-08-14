@@ -1,81 +1,166 @@
 export const trackTypes = {
-    TEST_TRACK: {},
+    TEST_TRACK: {
+        dataFields: {}
+    },
     CONSUMED_WATER: {
-        litresProduct: Number
+        title: 'Water',
+        dataFields: {
+            litresProduct: Number
+        }
     },
     CONSUMED_ALCOHOL: {
-        litresProduct: Number,
-        alcoholPercentage: Number
+        title: 'Alcohol',
+        dataFields: {
+            litresProduct: Number,
+            alcoholPercentage: Number
+        }
     },
     CONSUMED_FOOD: {
-        gramsProduct: Number,
-        caloriesTotal: Number
+        title: 'Food',
+        dataFields: {
+            gramsProduct: Number,
+            caloriesTotal: Number
+        }
     },
     CONSUMED_CAFFEINE: {
-        gramsProduct: Number,
-        gramsCaffeine: Number
+        title: 'Caffeine',
+        dataFields: {
+            gramsProduct: Number,
+            gramsCaffeine: Number
+        }
     },
     CONSUMED_CIGARETTE: {
-        gramsProduct: Number,
-        gramsNicotine: Number
+        title: 'Cigarette',
+        dataFields: {
+            gramsProduct: Number,
+            gramsNicotine: Number
+        }
     },
     CONSUMED_SNUFF: {
-        gramsProduct: Number,
-        gramsNicotine: Number
+        title: 'Snuff',
+        dataFields: {
+            gramsProduct: Number,
+            gramsNicotine: Number
+        }
     },
     EXCRETED_URINE: {
-        litres: Number
+        title: 'Urine',
+        dataFields: {
+            litres: Number
+        }
     },
     EXCRETED_FECES: {
-        grams: Number
+        title: 'Feces',
+        dataFields: {
+            grams: Number
+        }
     },
     EXCRETED_VOMIT: {
-        litres: Number,
-        forced: Boolean
+        title: 'Vomit',
+        dataFields: {
+            litres: Number,
+            forced: Boolean
+        }
     },
     HAIRCUT: {
-        metersCut: Number,
-        professional: Boolean
+        title: 'Haircut',
+        dataFields: {
+            metersCut: Number,
+            professional: Boolean
+        }
     },
-    BLOW_NOSE: {},
-    BRUSH_TEETH: {},
+    BLOW_NOSE: {
+        title: 'Blow nose',
+        dataFields: {}
+    },
+    BRUSH_TEETH: {
+        title: 'Brush teeth',
+        dataFields: {}
+    },
     SHOWER: {
-        temperature: Number,
-        liters: Number,
-        tub: Boolean
+        title: 'Shower',
+        dataFields: {
+            temperature: Number,
+            liters: Number,
+            tub: Boolean
+        }
     },
     SHAVE: {
-        professional: Boolean
+        title: 'Shave',
+        dataFields: {
+            centimetersCut: Number,
+            professional: Boolean
+        }
     },
-    HEARTACHE: {},
-    HEADACHE: {},
+    HEARTACHE: {
+        title: 'Heartache',
+        dataFields: {}
+    },
+    HEADACHE: {
+        title: 'Headache',
+        dataFields: {}
+    },
     MASTURBATE: {
-        orgasm: Number
+        title: 'Masturbate',
+        dataFields: {
+            orgasm: Number,
+            mutual: Boolean
+        }
     },
     SEX: {
-        youOrgasm: Number,
-        theyOrgasm: Number
+        title: 'Sex',
+        dataFields: {
+            youOrgasm: Number,
+            theyOrgasm: Number
+        }
     },
     CLIP_NAILS: {
-        cutCentimeters: Number
+        title: 'Clipped Nails',
+        dataFields: {
+            cutCentimeters: Number
+        }
     },
-    COOKING: {},
-    CLEANING: {},
-    FART: {},
+    COOKING: {
+        title: 'Cooking',
+        dataFields: {}
+    },
+    CLEANING: {
+        title: 'Cleaning',
+        dataFields: {}
+    },
+    FART: {
+        title: 'Farted',
+        dataFields: {}
+    },
     POP_ZIT: {
-        resqueeze: Boolean // Popped this zit before?
+        title: 'Popped Zit',
+        dataFields: {
+            resqueeze: Boolean // Popped this zit before?
+        }
     },
     WAKEUP_EARWORM: {
-        title: String,
-        album: String,
-        artist: String,
-        spotifyURL: String
+        title: 'Wakeup Earworm',
+        dataFields: {
+            title: String,
+            album: String,
+            artist: String,
+            spotifyURL: String
+        }
     },
-    FEELING_SICK: {},
+    FEELING_SICK: {
+        title: 'Feeling Sick',
+        dataFields: {}
+    },
     TINNITUS: {
-        highPitch: Boolean
+        title: 'Tinnitus',
+        dataFields: {
+            highPitch: Boolean
+        }
     },
     WORKOUT: {
-        caloriesBurned: Number
+        title: 'Workout',
+        dataFields: {
+            caloriesBurned: Number
+        }
     }
 } as const

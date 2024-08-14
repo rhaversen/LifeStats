@@ -85,7 +85,7 @@ export function validateTrackNameAndData (trackName: string, data?: Record<strin
     if (data === undefined || data === null) return true
 
     // Get the allowed keys for the track type
-    const allowedKeys = trackTypes[trackNameKey] as Record<string, unknown>
+    const allowedKeys = trackTypes[trackNameKey].dataFields as Record<string, unknown>
 
     // Check if the data has the allowed keys and the correct types
     for (const key in data) {
