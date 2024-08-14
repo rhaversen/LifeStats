@@ -98,7 +98,9 @@ export const trackTypes = {
     },
     HEADACHE: {
         title: 'Headache',
-        dataFields: {}
+        dataFields: {
+            intensity: ['Low', 'Medium', 'High']
+        }
     },
     MASTURBATE: {
         title: 'Masturbate',
@@ -149,7 +151,12 @@ export const trackTypes = {
     },
     FEELING_SICK: {
         title: 'Feeling Sick',
-        dataFields: {}
+        dataFields: {
+            nausea: Boolean,
+            fever: Boolean,
+            cough: Boolean,
+            soreThroat: Boolean
+        }
     },
     TINNITUS: {
         title: 'Tinnitus',
