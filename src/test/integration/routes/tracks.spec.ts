@@ -16,7 +16,7 @@ import TrackModel, { type ITrack } from '../../../app/models/Track.js'
 describe('POST api/v1/tracks', function () {
     describe('Post a new track', function () {
         let testUser: IUser
-        let track: { trackName: string, accessToken: string }
+        let track: { trackType: string, accessToken: string }
 
         beforeEach(async function () {
             testUser = new UserModel({
@@ -26,7 +26,7 @@ describe('POST api/v1/tracks', function () {
             })
             await testUser.save()
             track = {
-                trackName: 'TEST_TRACK',
+                trackType: 'TEST_TRACK',
                 accessToken: testUser.accessToken
             }
         })
@@ -35,7 +35,7 @@ describe('POST api/v1/tracks', function () {
             await agent.post('/v1/tracks').send(track)
             const allTracks = await TrackModel.find({}).exec()
             expect(allTracks.length).to.equal(1)
-            expect(allTracks[0].trackName).to.equal(track.trackName)
+            expect(allTracks[0].trackType).to.equal(track.trackType)
         })
 
         it('should respond with status code 201', async function () {
@@ -45,7 +45,7 @@ describe('POST api/v1/tracks', function () {
 
         it('should respond with the track', async function () {
             const res = await agent.post('/v1/tracks').send(track)
-            expect(res.body.trackName).to.equal(track.trackName)
+            expect(res.body.trackType).to.equal(track.trackType)
         })
 
         it('should add the user to the track', async function () {
@@ -76,7 +76,7 @@ describe('POST api/v1/tracks', function () {
 
     describe('Positive timeOffset', function () {
         let testUser: IUser
-        let track: { trackName: string, accessToken: string, timeOffset: number }
+        let track: { trackType: string, accessToken: string, timeOffset: number }
 
         beforeEach(async function () {
             testUser = new UserModel({
@@ -86,7 +86,7 @@ describe('POST api/v1/tracks', function () {
             })
             await testUser.save()
             track = {
-                trackName: 'TEST_TRACK',
+                trackType: 'TEST_TRACK',
                 accessToken: testUser.accessToken,
                 timeOffset: 10
             }
@@ -96,7 +96,7 @@ describe('POST api/v1/tracks', function () {
             await agent.post('/v1/tracks').send(track)
             const allTracks = await TrackModel.find({}).exec()
             expect(allTracks.length).to.equal(1)
-            expect(allTracks[0].trackName).to.equal(track.trackName)
+            expect(allTracks[0].trackType).to.equal(track.trackType)
         })
 
         it('should respond with status code 201', async function () {
@@ -106,7 +106,7 @@ describe('POST api/v1/tracks', function () {
 
         it('should respond with the track', async function () {
             const res = await agent.post('/v1/tracks').send(track)
-            expect(res.body.trackName).to.equal(track.trackName)
+            expect(res.body.trackType).to.equal(track.trackType)
         })
 
         it('should add the user to the track', async function () {
@@ -127,7 +127,7 @@ describe('POST api/v1/tracks', function () {
 
     describe('Negative timeOffset', function () {
         let testUser: IUser
-        let track: { trackName: string, accessToken: string, timeOffset: number }
+        let track: { trackType: string, accessToken: string, timeOffset: number }
 
         beforeEach(async function () {
             testUser = new UserModel({
@@ -137,7 +137,7 @@ describe('POST api/v1/tracks', function () {
             })
             await testUser.save()
             track = {
-                trackName: 'TEST_TRACK',
+                trackType: 'TEST_TRACK',
                 accessToken: testUser.accessToken,
                 timeOffset: -10
             }
@@ -147,7 +147,7 @@ describe('POST api/v1/tracks', function () {
             await agent.post('/v1/tracks').send(track)
             const allTracks = await TrackModel.find({}).exec()
             expect(allTracks.length).to.equal(1)
-            expect(allTracks[0].trackName).to.equal(track.trackName)
+            expect(allTracks[0].trackType).to.equal(track.trackType)
         })
 
         it('should respond with status code 201', async function () {
@@ -157,7 +157,7 @@ describe('POST api/v1/tracks', function () {
 
         it('should respond with the track', async function () {
             const res = await agent.post('/v1/tracks').send(track)
-            expect(res.body.trackName).to.equal(track.trackName)
+            expect(res.body.trackType).to.equal(track.trackType)
         })
 
         it('should add the user to the track', async function () {
@@ -178,7 +178,7 @@ describe('POST api/v1/tracks', function () {
 
     describe('Reject large positive timeOffset', function () {
         let testUser: IUser
-        let track: { trackName: string, accessToken: string, timeOffset: number }
+        let track: { trackType: string, accessToken: string, timeOffset: number }
 
         beforeEach(async function () {
             testUser = new UserModel({
@@ -188,7 +188,7 @@ describe('POST api/v1/tracks', function () {
             })
             await testUser.save()
             track = {
-                trackName: 'TEST_TRACK',
+                trackType: 'TEST_TRACK',
                 accessToken: testUser.accessToken,
                 timeOffset: Number.MAX_VALUE
             }
@@ -208,7 +208,7 @@ describe('POST api/v1/tracks', function () {
 
     describe('Reject large negative timeOffset', function () {
         let testUser: IUser
-        let track: { trackName: string, accessToken: string, timeOffset: number }
+        let track: { trackType: string, accessToken: string, timeOffset: number }
 
         beforeEach(async function () {
             testUser = new UserModel({
@@ -218,7 +218,7 @@ describe('POST api/v1/tracks', function () {
             })
             await testUser.save()
             track = {
-                trackName: 'TEST_TRACK',
+                trackType: 'TEST_TRACK',
                 accessToken: testUser.accessToken,
                 timeOffset: -Number.MAX_VALUE
             }
@@ -249,7 +249,7 @@ describe('DELETE api/v1/tracks/last', function () {
         })
         await testUserA.save()
         testTrackA1 = new TrackModel({
-            trackName: 'TEST_TRACK_A1',
+            trackType: 'TEST_TRACK_A1',
             userId: testUserA._id
         })
         await testTrackA1.save()
@@ -281,7 +281,7 @@ describe('DELETE api/v1/tracks/last', function () {
 
         beforeEach(async function () {
             earlierDateTrack = new TrackModel({
-                trackName: 'EARLIER_DATE_TRACK',
+                trackType: 'EARLIER_DATE_TRACK',
                 date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7), // A week ago
                 userId: testUserA._id
             })
@@ -291,7 +291,7 @@ describe('DELETE api/v1/tracks/last', function () {
 
         it('should delete the newest created track', async function () {
             const allTracks = await TrackModel.find({}).exec()
-            expect(allTracks[0].trackName).to.equal('TEST_TRACK_A1')
+            expect(allTracks[0].trackType).to.equal('TEST_TRACK_A1')
         })
     })
 
@@ -349,7 +349,7 @@ describe('DELETE api/v1/tracks/last', function () {
     describe('Multiple tracks', function () {
         beforeEach(async function () {
             const newTrack = new TrackModel({
-                trackName: 'NEW_TRACK',
+                trackType: 'NEW_TRACK',
                 userId: testUserA._id
             })
             await newTrack.save()
@@ -363,7 +363,7 @@ describe('DELETE api/v1/tracks/last', function () {
 
         it('should delete last track', async function () {
             const allTracks = await TrackModel.find({}).exec()
-            expect(allTracks[0].trackName).to.equal('TEST_TRACK_A1')
+            expect(allTracks[0].trackType).to.equal('TEST_TRACK_A1')
         })
 
         it('should respond with status code 204', async function () {
@@ -411,7 +411,7 @@ describe('DELETE api/v1/tracks/last', function () {
             })
             await testUserB.save()
             testTrackB1 = new TrackModel({
-                trackName: 'TEST_TRACK_B1',
+                trackType: 'TEST_TRACK_B1',
                 userId: testUserB._id
             })
             await testTrackB1.save()
@@ -472,12 +472,12 @@ describe('DELETE api/v1/tracks/last', function () {
 
             beforeEach(async function () {
                 testTrackA2 = new TrackModel({
-                    trackName: 'TEST_TRACK_A2',
+                    trackType: 'TEST_TRACK_A2',
                     userId: testUserA._id
                 })
                 await testTrackA2.save()
                 testTrackB2 = new TrackModel({
-                    trackName: 'TEST_TRACK_B2',
+                    trackType: 'TEST_TRACK_B2',
                     userId: testUserB._id
                 })
                 await testTrackB2.save()
@@ -491,7 +491,7 @@ describe('DELETE api/v1/tracks/last', function () {
 
             it('should delete the last track', async function () {
                 const testUserATracks = await TrackModel.find({ userId: testUserA._id }).exec()
-                expect(testUserATracks[0].trackName).to.equal('TEST_TRACK_A1')
+                expect(testUserATracks[0].trackType).to.equal('TEST_TRACK_A1')
             })
 
             it('should not delete any tracks of the other user', async function () {
@@ -532,12 +532,12 @@ describe('GET api/v1/tracks', function () {
         userB = await UserModel.create(userBFields)
 
         await TrackModel.insertMany([
-            { trackName: 'TEST_TRACK_A1', userId: userA._id, date: new Date(Date.UTC(2020, 4, 14)) },
-            { trackName: 'TEST_TRACK_A1', userId: userA._id, date: new Date(Date.UTC(2020, 4, 15)) },
-            { trackName: 'TEST_TRACK_A2', userId: userA._id, date: new Date(Date.UTC(2020, 4, 16)) },
-            { trackName: 'TEST_TRACK_A3', userId: userA._id, date: new Date(Date.UTC(2020, 4, 17)) },
-            { trackName: 'TEST_TRACK_B1', userId: userB._id },
-            { trackName: 'TEST_TRACK_B2', userId: userB._id }
+            { trackType: 'TEST_TRACK_A1', userId: userA._id, date: new Date(Date.UTC(2020, 4, 14)) },
+            { trackType: 'TEST_TRACK_A1', userId: userA._id, date: new Date(Date.UTC(2020, 4, 15)) },
+            { trackType: 'TEST_TRACK_A2', userId: userA._id, date: new Date(Date.UTC(2020, 4, 16)) },
+            { trackType: 'TEST_TRACK_A3', userId: userA._id, date: new Date(Date.UTC(2020, 4, 17)) },
+            { trackType: 'TEST_TRACK_B1', userId: userB._id },
+            { trackType: 'TEST_TRACK_B2', userId: userB._id }
         ])
 
         // Login userA
@@ -567,15 +567,15 @@ describe('GET api/v1/tracks', function () {
         })
 
         it('should respond with all tracks of the user', async function () {
-            expect(res.body[0].trackName).to.equal('TEST_TRACK_A1')
-            expect(res.body[1].trackName).to.equal('TEST_TRACK_A1')
-            expect(res.body[2].trackName).to.equal('TEST_TRACK_A2')
-            expect(res.body[3].trackName).to.equal('TEST_TRACK_A3')
+            expect(res.body[0].trackType).to.equal('TEST_TRACK_A1')
+            expect(res.body[1].trackType).to.equal('TEST_TRACK_A1')
+            expect(res.body[2].trackType).to.equal('TEST_TRACK_A2')
+            expect(res.body[3].trackType).to.equal('TEST_TRACK_A3')
         })
 
         it('should not respond with any track of other users', async function () {
             for (const track of res.body) {
-                expect(track.trackName).to.not.include('B')
+                expect(track.trackType).to.not.include('B')
             }
         })
     })
@@ -585,7 +585,7 @@ describe('GET api/v1/tracks', function () {
             let res: Response
 
             beforeEach(async function () {
-                res = await agent.get('/v1/tracks?trackName=TEST_TRACK_A1').set('Cookie', sessionCookie)
+                res = await agent.get('/v1/tracks?trackType=TEST_TRACK_A1').set('Cookie', sessionCookie)
             })
 
             it('should respond with status code 200', async function () {
@@ -601,19 +601,19 @@ describe('GET api/v1/tracks', function () {
             })
 
             it('should respond with all tracks of the user', async function () {
-                expect(res.body[0].trackName).to.equal('TEST_TRACK_A1')
-                expect(res.body[1].trackName).to.equal('TEST_TRACK_A1')
+                expect(res.body[0].trackType).to.equal('TEST_TRACK_A1')
+                expect(res.body[1].trackType).to.equal('TEST_TRACK_A1')
             })
 
             it('should not respond with any track of other users', async function () {
                 for (const track of res.body) {
-                    expect(track.trackName).to.not.include('B')
+                    expect(track.trackType).to.not.include('B')
                 }
             })
 
             it('should not respond with any track that does not match the query', async function () {
                 for (const track of res.body) {
-                    expect(track.trackName).to.not.include('2')
+                    expect(track.trackType).to.not.include('2')
                 }
             })
         })
@@ -639,19 +639,19 @@ describe('GET api/v1/tracks', function () {
                 })
 
                 it('should respond with all tracks of the user', async function () {
-                    expect(res.body[0].trackName).to.equal('TEST_TRACK_A2')
-                    expect(res.body[1].trackName).to.equal('TEST_TRACK_A3')
+                    expect(res.body[0].trackType).to.equal('TEST_TRACK_A2')
+                    expect(res.body[1].trackType).to.equal('TEST_TRACK_A3')
                 })
 
                 it('should not respond with any track of other users', async function () {
                     for (const track of res.body) {
-                        expect(track.trackName).to.not.include('B')
+                        expect(track.trackType).to.not.include('B')
                     }
                 })
 
                 it('should not respond with any track that does not match the query', async function () {
                     for (const track of res.body) {
-                        expect(track.trackName).to.not.include('1')
+                        expect(track.trackType).to.not.include('1')
                     }
                 })
 
@@ -682,20 +682,20 @@ describe('GET api/v1/tracks', function () {
                 })
 
                 it('should respond with all tracks of the user that match the query', async function () {
-                    expect(res.body[0].trackName).to.equal('TEST_TRACK_A1')
-                    expect(res.body[1].trackName).to.equal('TEST_TRACK_A1')
-                    expect(res.body[2].trackName).to.equal('TEST_TRACK_A2')
+                    expect(res.body[0].trackType).to.equal('TEST_TRACK_A1')
+                    expect(res.body[1].trackType).to.equal('TEST_TRACK_A1')
+                    expect(res.body[2].trackType).to.equal('TEST_TRACK_A2')
                 })
 
                 it('should not respond with any track of other users', async function () {
                     for (const track of res.body) {
-                        expect(track.trackName).to.not.include('B')
+                        expect(track.trackType).to.not.include('B')
                     }
                 })
 
                 it('should not respond with any track that does not match the query', async function () {
                     for (const track of res.body) {
-                        expect(track.trackName).to.not.include('3')
+                        expect(track.trackType).to.not.include('3')
                     }
                 })
 
@@ -712,7 +712,7 @@ describe('GET api/v1/tracks', function () {
         let res: Response
 
         beforeEach(async function () {
-            res = await agent.get('/v1/tracks?trackName=TEST_TRACK_A1&fromDate=2020-05-15').set('Cookie', sessionCookie)
+            res = await agent.get('/v1/tracks?trackType=TEST_TRACK_A1&fromDate=2020-05-15').set('Cookie', sessionCookie)
         })
 
         it('should respond with status code 200', async function () {
@@ -728,18 +728,18 @@ describe('GET api/v1/tracks', function () {
         })
 
         it('should respond with all tracks of the user that match the query', async function () {
-            expect(res.body[0].trackName).to.equal('TEST_TRACK_A1')
+            expect(res.body[0].trackType).to.equal('TEST_TRACK_A1')
         })
 
         it('should not respond with any track of other users', async function () {
             for (const track of res.body) {
-                expect(track.trackName).to.not.include('B')
+                expect(track.trackType).to.not.include('B')
             }
         })
 
         it('should not respond with any track that does not match the query', async function () {
             for (const track of res.body) {
-                expect(track.trackName).to.not.include('2')
+                expect(track.trackType).to.not.include('2')
             }
         })
 
@@ -753,7 +753,7 @@ describe('GET api/v1/tracks', function () {
             let res: Response
 
             beforeEach(async function () {
-                res = await agent.get('/v1/tracks?trackName=TEST_TRACK_A1&fromDate=2020-05-16').set('Cookie', sessionCookie)
+                res = await agent.get('/v1/tracks?trackType=TEST_TRACK_A1&fromDate=2020-05-16').set('Cookie', sessionCookie)
             })
 
             it('should respond with status code 204', async function () {
@@ -765,17 +765,17 @@ describe('GET api/v1/tracks', function () {
             })
 
             it('should not respond with any tracks', async function () {
-                expect(JSON.stringify(res.body)).to.not.include('trackName')
+                expect(JSON.stringify(res.body)).to.not.include('trackType')
             })
         })
     })
 
     describe('Query with no match', function () {
-        describe('trackName query', function () {
+        describe('trackType query', function () {
             let res: Response
 
             beforeEach(async function () {
-                res = await agent.get('/v1/tracks?trackName=nonExistingTrack').set('Cookie', sessionCookie)
+                res = await agent.get('/v1/tracks?trackType=nonExistingTrack').set('Cookie', sessionCookie)
             })
 
             it('should respond with status code 204', async function () {
@@ -787,7 +787,7 @@ describe('GET api/v1/tracks', function () {
             })
 
             it('should not respond with any tracks', async function () {
-                expect(JSON.stringify(res.body)).to.not.include('trackName')
+                expect(JSON.stringify(res.body)).to.not.include('trackType')
             })
         })
 
@@ -807,7 +807,7 @@ describe('GET api/v1/tracks', function () {
             })
 
             it('should not respond with any tracks', async function () {
-                expect(JSON.stringify(res.body)).to.not.include('trackName')
+                expect(JSON.stringify(res.body)).to.not.include('trackType')
             })
         })
 
@@ -827,7 +827,7 @@ describe('GET api/v1/tracks', function () {
             })
 
             it('should not respond with any tracks', async function () {
-                expect(JSON.stringify(res.body)).to.not.include('trackName')
+                expect(JSON.stringify(res.body)).to.not.include('trackType')
             })
         })
     })

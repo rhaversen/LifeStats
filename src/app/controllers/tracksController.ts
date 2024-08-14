@@ -14,18 +14,18 @@ export async function createTrack (req: Request, res: Response, next: NextFuncti
 
     const {
         accessToken,
-        trackName,
+        trackType,
         timeOffset,
         data
     } = req.body as {
         accessToken?: unknown
-        trackName?: unknown
+        trackType?: unknown
         timeOffset?: unknown
         data?: unknown
     }
 
-    if (typeof trackName !== 'string' || trackName === '') {
-        res.status(400).json({ error: 'trackName must be a non-empty string.' })
+    if (typeof trackType !== 'string' || trackType === '') {
+        res.status(400).json({ error: 'trackType must be a non-empty string.' })
         return
     }
 
@@ -57,7 +57,7 @@ export async function createTrack (req: Request, res: Response, next: NextFuncti
 
     try {
         const newTrack = await TrackModel.create({
-            trackName,
+            trackType,
             date,
             userId: user._id,
             data
@@ -104,7 +104,7 @@ export async function getTracksWithQuery (req: Request, res: Response, next: Nex
     logger.silly('Fetching tracks with query')
 
     const {
-        trackName,
+        trackType,
         fromDate,
         toDate
     } = req.query as Record<string, unknown>
@@ -118,7 +118,7 @@ export async function getTracksWithQuery (req: Request, res: Response, next: Nex
 
     const tracks = await TrackModel.find({
         userId: user._id,
-        ...(trackName !== undefined && { trackName }),
+        ...(trackType !== undefined && { trackType }),
         ...(fromDate !== undefined && { date: { $gte: new Date(fromDate as string) } }),
         ...(toDate !== undefined && { date: { $lte: new Date(toDate as string) } })
     })

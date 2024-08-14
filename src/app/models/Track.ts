@@ -14,7 +14,7 @@ const trackTypes = trackTypesModule.trackTypes
 export interface ITrack extends Document {
     // Properties
     _id: Types.ObjectId
-    trackName: keyof typeof trackTypes // The name of the track
+    trackType: keyof typeof trackTypes // The name of the track
     date: Date // The date the track took place
     duration: number | null // The duration of the track in minutes (null if ongoing)
     userId: Types.ObjectId // The user who created the track
@@ -26,7 +26,7 @@ export interface ITrack extends Document {
 }
 
 const trackSchema = new Schema<ITrack>({
-    trackName: {
+    trackType: {
         type: Schema.Types.String,
         required: true,
         enum: Object.keys(trackTypes)
@@ -57,7 +57,7 @@ const trackSchema = new Schema<ITrack>({
 
 // Adding indexes
 trackSchema.index({ userId: 1 })
-trackSchema.index({ trackName: 1 })
+trackSchema.index({ trackType: 1 })
 trackSchema.index({ createdAt: -1 })
 
 // Pre-save middleware
@@ -68,15 +68,15 @@ trackSchema.pre('save', function (next) {
 
 // Adding validation to data
 trackSchema.path('data').validate(function (this: ITrack) {
-    return validateData(this.trackName, this.data)
+    return validateData(this.trackType, this.data)
 }, 'Data is not valid')
 
-function validateData (trackName: ITrack['trackName'], data?: Map<string, unknown>): boolean {
+function validateData (trackType: ITrack['trackType'], data?: Map<string, unknown>): boolean {
     // No data is always valid
     if (data === undefined || data === null) return true
 
     // Retrieve the data fields specification for the given track type
-    const fields = trackTypes[trackName]?.dataFields
+    const fields = trackTypes[trackType]?.dataFields
 
     // If no dataFields defined, only empty data is valid
     if (Object.keys(fields).length === 0) return data.size === 0

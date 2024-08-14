@@ -31,7 +31,7 @@ describe('Track Model', function () {
 
             beforeEach(async function () {
                 track = new TrackModel({
-                    trackName: 'TEST_TRACK',
+                    trackType: 'TEST_TRACK',
                     userId: user._id
                 })
             })
@@ -56,7 +56,7 @@ describe('Track Model', function () {
 
             beforeEach(async function () {
                 track = new TrackModel({
-                    trackName: 'TEST_TRACK',
+                    trackType: 'TEST_TRACK',
                     userId: user._id
                 })
             })
@@ -74,7 +74,7 @@ describe('Track Model', function () {
     })
 
     describe('required fields', function () {
-        it('should require trackName', async function () {
+        it('should require trackType', async function () {
             const track = new TrackModel({
                 userId: user._id
             })
@@ -85,7 +85,7 @@ describe('Track Model', function () {
 
         it('should require userId', async function () {
             const track = new TrackModel({
-                trackName: 'TEST_TRACK'
+                trackType: 'TEST_TRACK'
             })
             await track.save().catch((err) => {
                 expect(err).to.not.be.null
@@ -93,19 +93,19 @@ describe('Track Model', function () {
         })
     })
 
-    describe('trackName validation', function () {
-        it('should allow a valid trackName', async function () {
+    describe('trackType validation', function () {
+        it('should allow a valid trackType', async function () {
             const track = new TrackModel({
-                trackName: 'TEST_TRACK',
+                trackType: 'TEST_TRACK',
                 userId: user._id
             })
             await track.save()
-            expect(track.trackName).to.equal('TEST_TRACK')
+            expect(track.trackType).to.equal('TEST_TRACK')
         })
 
-        it('should not allow an invalid trackName', async function () {
+        it('should not allow an invalid trackType', async function () {
             const track = new TrackModel({
-                trackName: 'INVALID_TRACK_NAME_ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+                trackType: 'INVALID_TRACK_NAME_ABCDEFGHIJKLMNOPQRSTUVWXYZ',
                 userId: user._id
             })
             await track.save().catch((err) => {
@@ -117,7 +117,7 @@ describe('Track Model', function () {
     describe('data validation', function () {
         it('should allow no data', async function () {
             const track = new TrackModel({
-                trackName: 'DATA_TRACK_1',
+                trackType: 'DATA_TRACK_1',
                 userId: user._id
             })
             await track.save()
@@ -126,7 +126,7 @@ describe('Track Model', function () {
 
         it('should allow valid data', async function () {
             const track = new TrackModel({
-                trackName: 'DATA_TRACK_1',
+                trackType: 'DATA_TRACK_1',
                 userId: user._id,
                 data: {
                     dataField1: 1,
@@ -144,7 +144,7 @@ describe('Track Model', function () {
 
         it('should allow valid data with number enum', async function () {
             const track = new TrackModel({
-                trackName: 'DATA_TRACK_3',
+                trackType: 'DATA_TRACK_3',
                 userId: user._id,
                 data: {
                     dataField1: 1
@@ -158,7 +158,7 @@ describe('Track Model', function () {
 
         it('should allow valid data with string enum', async function () {
             const track = new TrackModel({
-                trackName: 'DATA_TRACK_2',
+                trackType: 'DATA_TRACK_2',
                 userId: user._id,
                 data: {
                     dataField1: 'Low'
@@ -172,7 +172,7 @@ describe('Track Model', function () {
 
         it('should allow valid data with boolean enum', async function () {
             const track = new TrackModel({
-                trackName: 'DATA_TRACK_1',
+                trackType: 'DATA_TRACK_1',
                 userId: user._id,
                 data: {
                     dataField3: true
@@ -186,7 +186,7 @@ describe('Track Model', function () {
 
         it('should allow valid data with min/max', async function () {
             const track = new TrackModel({
-                trackName: 'DATA_TRACK_4',
+                trackType: 'DATA_TRACK_4',
                 userId: user._id,
                 data: {
                     dataField1: 3
@@ -200,7 +200,7 @@ describe('Track Model', function () {
 
         it('should allow partial data with number', async function () {
             const track = new TrackModel({
-                trackName: 'DATA_TRACK_1',
+                trackType: 'DATA_TRACK_1',
                 userId: user._id,
                 data: {
                     dataField1: 1
@@ -214,7 +214,7 @@ describe('Track Model', function () {
 
         it('should allow partial data with string', async function () {
             const track = new TrackModel({
-                trackName: 'DATA_TRACK_1',
+                trackType: 'DATA_TRACK_1',
                 userId: user._id,
                 data: {
                     dataField2: 'string'
@@ -228,7 +228,7 @@ describe('Track Model', function () {
 
         it('should allow partial data with boolean', async function () {
             const track = new TrackModel({
-                trackName: 'DATA_TRACK_1',
+                trackType: 'DATA_TRACK_1',
                 userId: user._id,
                 data: {
                     dataField3: true
@@ -242,7 +242,7 @@ describe('Track Model', function () {
 
         it('should allow data with string enum', async function () {
             const track = new TrackModel({
-                trackName: 'DATA_TRACK_2',
+                trackType: 'DATA_TRACK_2',
                 userId: user._id,
                 data: {
                     dataField1: 'Low'
@@ -258,7 +258,7 @@ describe('Track Model', function () {
             let errorOccurred = false
             try {
                 const track = new TrackModel({
-                    trackName: 'DATA_TRACK_4',
+                    trackType: 'DATA_TRACK_4',
                     userId: user._id,
                     data: {
                         dataField1: 0
@@ -275,7 +275,7 @@ describe('Track Model', function () {
             let errorOccurred = false
             try {
                 const track = new TrackModel({
-                    trackName: 'DATA_TRACK_4',
+                    trackType: 'DATA_TRACK_4',
                     userId: user._id,
                     data: {
                         dataField1: 6
@@ -292,7 +292,7 @@ describe('Track Model', function () {
             let errorOccurred = false
             try {
                 const track = new TrackModel({
-                    trackName: 'DATA_TRACK_2',
+                    trackType: 'DATA_TRACK_2',
                     userId: user._id,
                     data: {
                         dataField1: ['Low', 'High']
@@ -309,7 +309,7 @@ describe('Track Model', function () {
             let errorOccurred = false
             try {
                 const track = new TrackModel({
-                    trackName: 'DATA_TRACK_1',
+                    trackType: 'DATA_TRACK_1',
                     userId: user._id,
                     data: {
                         dataField1: 'string'
@@ -326,7 +326,7 @@ describe('Track Model', function () {
             let errorOccurred = false
             try {
                 const track = new TrackModel({
-                    trackName: 'DATA_TRACK_1',
+                    trackType: 'DATA_TRACK_1',
                     userId: user._id,
                     data: {
                         dataField1: true
@@ -343,7 +343,7 @@ describe('Track Model', function () {
             let errorOccurred = false
             try {
                 const track = new TrackModel({
-                    trackName: 'DATA_TRACK_1',
+                    trackType: 'DATA_TRACK_1',
                     userId: user._id,
                     data: {
                         dataField2: 1
@@ -360,7 +360,7 @@ describe('Track Model', function () {
             let errorOccurred = false
             try {
                 const track = new TrackModel({
-                    trackName: 'DATA_TRACK_1',
+                    trackType: 'DATA_TRACK_1',
                     userId: user._id,
                     data: {
                         dataField2: true
@@ -377,7 +377,7 @@ describe('Track Model', function () {
             let errorOccurred = false
             try {
                 const track = new TrackModel({
-                    trackName: 'DATA_TRACK_1',
+                    trackType: 'DATA_TRACK_1',
                     userId: user._id,
                     data: {
                         dataField3: 1
@@ -394,7 +394,7 @@ describe('Track Model', function () {
             let errorOccurred = false
             try {
                 const track = new TrackModel({
-                    trackName: 'DATA_TRACK_1',
+                    trackType: 'DATA_TRACK_1',
                     userId: user._id,
                     data: {
                         dataField3: 'string'
@@ -411,7 +411,7 @@ describe('Track Model', function () {
             let errorOccurred = false
             try {
                 const track = new TrackModel({
-                    trackName: 'DATA_TRACK_4',
+                    trackType: 'DATA_TRACK_4',
                     userId: user._id,
                     data: {
                         dataField1: 'string'
@@ -428,7 +428,7 @@ describe('Track Model', function () {
             let errorOccurred = false
             try {
                 const track = new TrackModel({
-                    trackName: 'DATA_TRACK_4',
+                    trackType: 'DATA_TRACK_4',
                     userId: user._id,
                     data: {
                         dataField1: true
@@ -445,7 +445,7 @@ describe('Track Model', function () {
             let errorOccurred = false
             try {
                 const track = new TrackModel({
-                    trackName: 'DATA_TRACK_1',
+                    trackType: 'DATA_TRACK_1',
                     userId: user._id,
                     data: {
                         invalidDataField: 'test'
@@ -458,11 +458,11 @@ describe('Track Model', function () {
             expect(errorOccurred).to.be.true
         })
 
-        it('should not allow valid data with invalid trackName', async function () {
+        it('should not allow valid data with invalid trackType', async function () {
             let errorOccurred = false
             try {
                 const track = new TrackModel({
-                    trackName: 'INVALID_TRACK_NAME_ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+                    trackType: 'INVALID_TRACK_NAME_ABCDEFGHIJKLMNOPQRSTUVWXYZ',
                     userId: user._id,
                     data: {
                         dataField1: 1,
@@ -481,7 +481,7 @@ describe('Track Model', function () {
             let errorOccurred = false
             try {
                 const track = new TrackModel({
-                    trackName: 'DATA_TRACK_1',
+                    trackType: 'DATA_TRACK_1',
                     userId: user._id,
                     data: {
                         dataField1: 'string',
@@ -500,7 +500,7 @@ describe('Track Model', function () {
             let errorOccurred = false
             try {
                 const track = new TrackModel({
-                    trackName: 'NO_DATA_TRACK',
+                    trackType: 'NO_DATA_TRACK',
                     userId: user._id,
                     data: {
                         dataField1: 1,

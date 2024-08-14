@@ -82,7 +82,7 @@ const values = [
 
 describe('POST api/v1/tracks', function () {
     describe('Valid Access Token', function () {
-        let track: { trackName?: any, accessToken: string, timeOffset?: any }
+        let track: { trackType?: any, accessToken: string, timeOffset?: any }
         let testUser: IUser
 
         beforeEach(async function () {
@@ -94,16 +94,16 @@ describe('POST api/v1/tracks', function () {
         })
 
         describe('Valid Access Token', function () {
-            for (const trackName of values) {
+            for (const trackType of values) {
                 for (const timeOffset of values) {
                     const testString = JSON.stringify({
-                        trackName,
+                        trackType,
                         timeOffset
                     })
 
                     it(`should handle invalid inputs gracefully (test case ${testString})`, async function () {
                         track = {
-                            trackName,
+                            trackType,
                             accessToken: testUser.accessToken,
                             timeOffset
                         }
@@ -122,18 +122,18 @@ describe('POST api/v1/tracks', function () {
         })
 
         describe('Invalid Access Token', function () {
-            let track: { trackName?: any, accessToken?: any, timeOffset?: any }
+            let track: { trackType?: any, accessToken?: any, timeOffset?: any }
             for (const accessToken of values) {
-                for (const trackName of values) {
+                for (const trackType of values) {
                     for (const timeOffset of values) {
                         const testString = JSON.stringify({
-                            trackName,
+                            trackType,
                             timeOffset
                         })
 
                         it(`should handle invalid inputs gracefully (test case ${testString})`, async function () {
                             track = {
-                                trackName,
+                                trackType,
                                 accessToken,
                                 timeOffset
                             }
@@ -267,7 +267,7 @@ describe('DELETE api/v1/tracks/last', function () {
         })
         await testUser.save()
         testTrack = new TrackModel({
-            trackName: 'TEST_TRACK_A1',
+            trackType: 'TEST_TRACK_A1',
             date: new Date(),
             userId: testUser._id
         })
@@ -306,7 +306,7 @@ describe('GET api/v1/tracks', function () {
                 signUpDate: new Date()
             })
             await TrackModel.create({
-                trackName: 'TestTrack',
+                trackType: 'TestTrack',
                 userId: testUser._id
             })
         })
@@ -319,7 +319,7 @@ describe('GET api/v1/tracks', function () {
 
             it(`should handle invalid inputs gracefully (test case ${testString})`, async function () {
                 // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-                const res = await agent.get(`/v1/tracks?trackName=${query}`).send({ accessToken: testUser.accessToken })
+                const res = await agent.get(`/v1/tracks?trackType=${query}`).send({ accessToken: testUser.accessToken })
 
                 // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                 expect(res.body).to.not.be.undefined
@@ -338,7 +338,7 @@ describe('GET api/v1/tracks', function () {
                 signUpDate: new Date()
             })
             await TrackModel.create({
-                trackName: 'TestTrack',
+                trackType: 'TestTrack',
                 userId: testUser._id
             })
         })
@@ -353,7 +353,7 @@ describe('GET api/v1/tracks', function () {
 
                     it(`should handle invalid inputs gracefully (test case ${testString})`, async function () {
                         // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-                        const res = await agent.get(`/v1/tracks?trackName=${query}`).send({ accessToken })
+                        const res = await agent.get(`/v1/tracks?trackType=${query}`).send({ accessToken })
 
                         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                         expect(res.body).to.not.be.undefined
@@ -374,7 +374,7 @@ describe('GET api/v1/tracks', function () {
                 })
 
                 it(`should handle invalid inputs gracefully (test case ${testString})`, async function () {
-                    const res = await agent.get('/v1/tracks?trackName=TestTrack').send({ accessToken })
+                    const res = await agent.get('/v1/tracks?trackType=TestTrack').send({ accessToken })
 
                     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                     expect(res.body).to.not.be.undefined
