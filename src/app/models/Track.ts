@@ -37,7 +37,7 @@ const trackSchema = new Schema<ITrack>({
         default: Date.now
     },
     duration: {
-        type: Number,
+        type: Schema.Types.Number,
         required: false,
         default: 0,
         min: [0, 'Duration cannot be negative']
