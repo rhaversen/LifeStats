@@ -15,38 +15,10 @@ export async function createTrack (req: Request, res: Response, next: NextFuncti
     const {
         accessToken,
         trackType,
-        timeOffset,
+        date,
+        duration,
         data
-    } = req.body as {
-        accessToken?: unknown
-        trackType?: unknown
-        timeOffset?: unknown
-        data?: unknown
-    }
-
-    if (typeof trackType !== 'string' || trackType === '') {
-        res.status(400).json({ error: 'trackType must be a non-empty string.' })
-        return
-    }
-
-    if (typeof accessToken !== 'string' || accessToken === '') {
-        res.status(400).json({ error: 'accessToken must be a non-empty string.' })
-        return
-    }
-
-    // If timeOffset is provided, it must be a number
-    if (timeOffset !== undefined && typeof timeOffset !== 'number') {
-        res.status(400).json({ error: 'timeOffset must be a number.' })
-        return
-    }
-
-    const date = new Date(Date.now() + (timeOffset ?? 0))
-
-    // Check if the potential date is valid
-    if (isNaN(date.getTime())) {
-        res.status(400).json({ error: 'Provided timeOffset results in an invalid date.' })
-        return
-    }
+    } = req.body as Record<string, unknown>
 
     const user = await UserModel.findOne({ accessToken })
 
@@ -60,6 +32,7 @@ export async function createTrack (req: Request, res: Response, next: NextFuncti
             trackType,
             date,
             userId: user._id,
+            duration,
             data
         })
 

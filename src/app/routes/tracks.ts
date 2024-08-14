@@ -19,7 +19,8 @@ const router = Router()
  * @access Public
  * @param {string} req.body.accessToken The access token required to authenticate the request.
  * @param {string} req.body.TrackType The type of the track to be created.
- * @param {number} [req.body.timeOffset] Relative Time Offset (milliseconds).
+ * @param {number} [req.body.date] The date of the track.
+ * @param {number} [req.body.duration] The duration of the track.
  * @param {object} [req.body.data] The data of the track.
  * @return {number} res.status The status code of the HTTP response.
  * @return {object} res.body The newly created track.

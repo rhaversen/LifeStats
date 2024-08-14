@@ -16,7 +16,12 @@ import TrackModel, { type ITrack } from '../../../app/models/Track.js'
 describe('POST api/v1/tracks', function () {
     describe('Post a new track', function () {
         let testUser: IUser
-        let track: { trackType: string, accessToken: string }
+        let accessToken: string
+        const track = {
+            trackType: 'TEST_TRACK',
+            duration: 60000,
+            date: new Date(2020, 4, 15)
+        }
 
         beforeEach(async function () {
             testUser = new UserModel({
@@ -25,214 +30,68 @@ describe('POST api/v1/tracks', function () {
                 password: 'password'
             })
             await testUser.save()
-            track = {
-                trackType: 'TEST_TRACK',
-                accessToken: testUser.accessToken
-            }
+            accessToken = testUser.accessToken
         })
 
         it('should create a track', async function () {
-            await agent.post('/v1/tracks').send(track)
+            await agent.post('/v1/tracks').send({ ...track, accessToken })
             const allTracks = await TrackModel.find({}).exec()
             expect(allTracks.length).to.equal(1)
             expect(allTracks[0].trackType).to.equal(track.trackType)
         })
 
+        it('should set the duration of the track', async function () {
+            await agent.post('/v1/tracks').send({ ...track, accessToken })
+            const foundTrack = await TrackModel.findOne({}).exec() as ITrack
+            expect(foundTrack.duration).to.equal(track.duration)
+        })
+
+        it('should set the date of the track', async function () {
+            await agent.post('/v1/tracks').send({ ...track, accessToken })
+            const foundTrack = await TrackModel.findOne({}).exec() as ITrack
+            expect(new Date(foundTrack.date).getTime()).to.equal(track.date.getTime())
+        })
+
         it('should respond with status code 201', async function () {
-            const res = await agent.post('/v1/tracks').send(track)
+            const res = await agent.post('/v1/tracks').send({ ...track, accessToken })
             expect(res).to.have.status(201)
         })
 
         it('should respond with the track', async function () {
-            const res = await agent.post('/v1/tracks').send(track)
+            const res = await agent.post('/v1/tracks').send({ ...track, accessToken })
             expect(res.body.trackType).to.equal(track.trackType)
         })
 
         it('should add the user to the track', async function () {
-            await agent.post('/v1/tracks').send(track)
+            await agent.post('/v1/tracks').send({ ...track, accessToken })
             const foundUser = await UserModel.findOne({}).exec() as IUser
             const foundTrack = await TrackModel.findOne({}).exec() as ITrack
             expect(foundTrack.userId.toString()).to.equal(foundUser._id.toString())
-        })
-
-        it('should have the current date and time', async function () {
-            const fakeTime = new Date(2020, 4, 15).getTime()
-            sinon.useFakeTimers(fakeTime) // Fake the JavaScript environment's time
-            await agent.post('/v1/tracks').send(track)
-            const foundTrack = await TrackModel.findOne({}).exec() as ITrack
-            expect(new Date(foundTrack.date).getTime()).to.equal(fakeTime)
         })
 
         it('should not create a track if accessToken is invalid', async function () {
-            track = {
-                ...track,
-                accessToken: 'invalidCode'
-            }
-            await agent.post('/v1/tracks').send(track)
+            const res = await agent.post('/v1/tracks').send({ ...track, accessToken: 'invalidAccessToken' })
             const allTracks = await TrackModel.find({}).exec()
             expect(allTracks.length).to.equal(0)
-        })
-    })
-
-    describe('Positive timeOffset', function () {
-        let testUser: IUser
-        let track: { trackType: string, accessToken: string, timeOffset: number }
-
-        beforeEach(async function () {
-            testUser = new UserModel({
-                userName: 'TestUser',
-                email: 'test@test.com',
-                password: 'password'
-            })
-            await testUser.save()
-            track = {
-                trackType: 'TEST_TRACK',
-                accessToken: testUser.accessToken,
-                timeOffset: 10
-            }
+            expect(res).to.have.status(404)
         })
 
-        it('should create a track', async function () {
-            await agent.post('/v1/tracks').send(track)
-            const allTracks = await TrackModel.find({}).exec()
-            expect(allTracks.length).to.equal(1)
-            expect(allTracks[0].trackType).to.equal(track.trackType)
-        })
-
-        it('should respond with status code 201', async function () {
-            const res = await agent.post('/v1/tracks').send(track)
-            expect(res).to.have.status(201)
-        })
-
-        it('should respond with the track', async function () {
-            const res = await agent.post('/v1/tracks').send(track)
-            expect(res.body.trackType).to.equal(track.trackType)
-        })
-
-        it('should add the user to the track', async function () {
-            await agent.post('/v1/tracks').send(track)
-            const foundUser = await UserModel.findOne({}).exec() as IUser
+        it('should set the date to the current date if not provided', async function () {
+            await agent.post('/v1/tracks').send({ trackType: track.trackType, accessToken })
             const foundTrack = await TrackModel.findOne({}).exec() as ITrack
-            expect(foundTrack.userId.toString()).to.equal(foundUser._id.toString())
+            expect(new Date(foundTrack.date).getTime()).to.be.closeTo(new Date().getTime(), 1000)
         })
 
-        it('should have the offset date and time', async function () {
-            const fakeTime = new Date(2020, 4, 15).getTime()
-            sinon.useFakeTimers(fakeTime) // Fake the JavaScript environment's time
-            await agent.post('/v1/tracks').send(track)
+        it('should set the duration to 0 if not provided', async function () {
+            await agent.post('/v1/tracks').send({ trackType: track.trackType, accessToken })
             const foundTrack = await TrackModel.findOne({}).exec() as ITrack
-            expect(new Date(foundTrack.date).getTime()).to.equal(fakeTime + track.timeOffset)
-        })
-    })
-
-    describe('Negative timeOffset', function () {
-        let testUser: IUser
-        let track: { trackType: string, accessToken: string, timeOffset: number }
-
-        beforeEach(async function () {
-            testUser = new UserModel({
-                userName: 'TestUser',
-                email: 'test@test.com',
-                password: 'password'
-            })
-            await testUser.save()
-            track = {
-                trackType: 'TEST_TRACK',
-                accessToken: testUser.accessToken,
-                timeOffset: -10
-            }
+            expect(foundTrack.duration).to.equal(0)
         })
 
-        it('should create a track', async function () {
-            await agent.post('/v1/tracks').send(track)
-            const allTracks = await TrackModel.find({}).exec()
-            expect(allTracks.length).to.equal(1)
-            expect(allTracks[0].trackType).to.equal(track.trackType)
-        })
-
-        it('should respond with status code 201', async function () {
-            const res = await agent.post('/v1/tracks').send(track)
-            expect(res).to.have.status(201)
-        })
-
-        it('should respond with the track', async function () {
-            const res = await agent.post('/v1/tracks').send(track)
-            expect(res.body.trackType).to.equal(track.trackType)
-        })
-
-        it('should add the user to the track', async function () {
-            await agent.post('/v1/tracks').send(track)
-            const foundUser = await UserModel.findOne({}).exec() as IUser
+        it('should set the duration to null if not provided', async function () {
+            await agent.post('/v1/tracks').send({ trackType: track.trackType, accessToken, duration: null })
             const foundTrack = await TrackModel.findOne({}).exec() as ITrack
-            expect(foundTrack.userId.toString()).to.equal(foundUser._id.toString())
-        })
-
-        it('should have the offset date and time', async function () {
-            const fakeTime = new Date(2020, 4, 15).getTime()
-            sinon.useFakeTimers(fakeTime) // Fake the JavaScript environment's time
-            await agent.post('/v1/tracks').send(track)
-            const foundTrack = await TrackModel.findOne({}).exec() as ITrack
-            expect(new Date(foundTrack.date).getTime()).to.equal(fakeTime + track.timeOffset)
-        })
-    })
-
-    describe('Reject large positive timeOffset', function () {
-        let testUser: IUser
-        let track: { trackType: string, accessToken: string, timeOffset: number }
-
-        beforeEach(async function () {
-            testUser = new UserModel({
-                userName: 'TestUser',
-                email: 'test@test.com',
-                password: 'password'
-            })
-            await testUser.save()
-            track = {
-                trackType: 'TEST_TRACK',
-                accessToken: testUser.accessToken,
-                timeOffset: Number.MAX_VALUE
-            }
-        })
-
-        it('should not create a track with large offset', async function () {
-            await agent.post('/v1/tracks').send(track)
-            const allTracks = await TrackModel.find({}).exec()
-            expect(allTracks.length).to.equal(0)
-        })
-
-        it('should respond with status code 400', async function () {
-            const res = await agent.post('/v1/tracks').send(track)
-            expect(res).to.have.status(400)
-        })
-    })
-
-    describe('Reject large negative timeOffset', function () {
-        let testUser: IUser
-        let track: { trackType: string, accessToken: string, timeOffset: number }
-
-        beforeEach(async function () {
-            testUser = new UserModel({
-                userName: 'TestUser',
-                email: 'test@test.com',
-                password: 'password'
-            })
-            await testUser.save()
-            track = {
-                trackType: 'TEST_TRACK',
-                accessToken: testUser.accessToken,
-                timeOffset: -Number.MAX_VALUE
-            }
-        })
-
-        it('should not create a track with large offset', async function () {
-            await agent.post('/v1/tracks').send(track)
-            const allTracks = await TrackModel.find({}).exec()
-            expect(allTracks.length).to.equal(0)
-        })
-
-        it('should respond with status code 400', async function () {
-            const res = await agent.post('/v1/tracks').send(track)
-            expect(res).to.have.status(400)
+            expect(foundTrack.duration).to.be.null
         })
     })
 })
