@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 // Node.js built-in modules
 
 // Third-party libraries
@@ -21,11 +22,9 @@ describe('User Model', function () {
         const user = new UserModel(testUserFields)
         await user.save()
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(user).to.exist
         expect(user.userName).to.equal(testUserFields.userName)
         expect(user.email).to.equal(testUserFields.email)
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(await user.comparePassword(testUserFields.password)).to.be.true
     })
 
@@ -36,7 +35,6 @@ describe('User Model', function () {
         })
         await user.save()
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(user).to.exist
         expect(user.userName).to.equal('JohnDoe')
     })
@@ -48,7 +46,6 @@ describe('User Model', function () {
         })
         await user.save()
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(user).to.exist
         expect(user.email).to.equal('test@test.com')
     })
@@ -60,9 +57,7 @@ describe('User Model', function () {
         })
         await user.save()
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(user).to.exist
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(await user.comparePassword('password')).to.be.true
     })
 
@@ -77,7 +72,6 @@ describe('User Model', function () {
             errorOccurred = true
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(errorOccurred).to.be.true
     })
 
@@ -92,7 +86,6 @@ describe('User Model', function () {
             errorOccurred = true
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(errorOccurred).to.be.true
     })
 
@@ -107,7 +100,6 @@ describe('User Model', function () {
             errorOccurred = true
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(errorOccurred).to.be.true
     })
 
@@ -122,7 +114,6 @@ describe('User Model', function () {
             errorOccurred = true
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(errorOccurred).to.be.true
     })
 
@@ -137,7 +128,6 @@ describe('User Model', function () {
             errorOccurred = true
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(errorOccurred).to.be.true
     })
 
@@ -152,7 +142,6 @@ describe('User Model', function () {
             errorOccurred = true
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(errorOccurred).to.be.true
     })
 
@@ -167,7 +156,6 @@ describe('User Model', function () {
             errorOccurred = true
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(errorOccurred).to.be.true
     })
 
@@ -180,7 +168,6 @@ describe('User Model', function () {
             errorOccurred = true
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(errorOccurred).to.be.true
     })
 
@@ -191,7 +178,6 @@ describe('User Model', function () {
         })
         await user.save()
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(user).to.exist
         expect(user.email).to.equal('test@test.com')
     })
@@ -207,7 +193,6 @@ describe('User Model', function () {
             errorOccurred = true
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(errorOccurred).to.be.true
     })
 
@@ -222,7 +207,6 @@ describe('User Model', function () {
             errorOccurred = true
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(errorOccurred).to.be.true
     })
 
@@ -237,7 +221,6 @@ describe('User Model', function () {
             errorOccurred = true
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(errorOccurred).to.be.true
     })
 
@@ -245,9 +228,7 @@ describe('User Model', function () {
         const user = new UserModel(testUserFields)
         await user.save()
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(user).to.exist
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(await user.comparePassword(testUserFields.password)).to.be.true
     })
 
@@ -311,7 +292,6 @@ describe('User Model', function () {
         await user.save()
 
         const isPasswordCorrect = await user.comparePassword(testUserFields.password)
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(isPasswordCorrect).to.be.true
     })
 
@@ -341,7 +321,6 @@ describe('User Model', function () {
             // Use new email
             const user2 = new UserModel({ ...testUserFields, email: 'test2@gmail.com' })
             await user2.save().catch((err) => {
-                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                 expect(err).to.not.be.null
             })
         })
@@ -374,7 +353,6 @@ describe('User Model', function () {
             // Use new email
             const user2 = new UserModel({ ...testUserFields, email: 'test2@gmail.com' })
             await user2.save().catch((err) => {
-                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                 expect(err).to.not.be.null
             })
         })

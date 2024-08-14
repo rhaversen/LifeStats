@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 // Node.js built-in modules
 
 // Third-party libraries
@@ -77,7 +78,6 @@ describe('Track Model', function () {
                 userId: user._id
             })
             await track.save().catch((err) => {
-                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                 expect(err).to.not.be.null
             })
         })
@@ -87,7 +87,6 @@ describe('Track Model', function () {
                 trackName: 'TEST_TRACK'
             })
             await track.save().catch((err) => {
-                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                 expect(err).to.not.be.null
             })
         })

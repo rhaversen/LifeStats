@@ -272,7 +272,6 @@ describe('DELETE api/v1/tracks/last', function () {
         })
 
         it('should have an empty body', async function () {
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             expect(res.body).to.be.empty
         })
     })
@@ -374,7 +373,6 @@ describe('DELETE api/v1/tracks/last', function () {
 
         it('should have an empty body', async function () {
             const res = await agent.delete('/v1/tracks/last').send({ accessToken: testUserA.accessToken })
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             expect(res.body).to.be.empty
         })
     })
@@ -397,7 +395,6 @@ describe('DELETE api/v1/tracks/last', function () {
         })
 
         it('should have an empty body', async function () {
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             expect(res.body).to.be.empty
         })
     })
@@ -438,7 +435,6 @@ describe('DELETE api/v1/tracks/last', function () {
             })
 
             it('should have an empty body', async function () {
-                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                 expect(res.body).to.be.empty
             })
         })
@@ -465,7 +461,6 @@ describe('DELETE api/v1/tracks/last', function () {
             })
 
             it('should have an empty body', async function () {
-                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                 expect(res.body).to.be.empty
             })
         })
@@ -509,7 +504,6 @@ describe('DELETE api/v1/tracks/last', function () {
             })
 
             it('should have an empty body', async function () {
-                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
                 expect(res.body).to.be.empty
             })
         })

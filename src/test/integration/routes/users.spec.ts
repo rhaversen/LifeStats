@@ -25,7 +25,6 @@ describe('POST api/v1/users', function () {
 
             const user = await UserModel.findOne({}).exec()
 
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             expect(user).to.exist
             expect(user).to.have.property('userName', userFields.userName)
             expect(user).to.have.property('email', userFields.email)
@@ -243,7 +242,6 @@ describe('DELETE api/v1/users', function () {
         it('should respond with an empty body', async function () {
             const res = await agent.delete(`/v1/users/${testUser.id.toString()}`).send(userFields)
 
-            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             expect(res.body).to.be.empty
         })
 

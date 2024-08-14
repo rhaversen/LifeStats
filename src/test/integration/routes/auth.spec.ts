@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 // file deepcode ignore NoHardcodedPasswords/test: Hardcoded credentials are only used for testing purposes
 // file deepcode ignore NoHardcodedCredentials/test: Hardcoded credentials are only used for testing purposes
 // file deepcode ignore HardcodedNonCryptoSecret/test: Hardcoded credentials are only used for testing purposes
@@ -295,7 +296,6 @@ describe('POST /v1/auth/logout', function () {
         const cookies = res.headers['set-cookie'] || []
         const sidCookie = cookies.find((cookie: string) => cookie.includes('connect.sid'))
 
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         expect(sidCookie).to.be.undefined
     })
 })
