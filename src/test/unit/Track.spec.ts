@@ -71,6 +71,22 @@ describe('Track Model', function () {
                 expect(track.createdAt.getTime()).to.be.closeTo(new Date().getTime(), 1000)
             })
         })
+
+        describe('duration', function () {
+            let track: ITrack
+
+            beforeEach(async function () {
+                track = new TrackModel({
+                    trackType: 'TEST_TRACK',
+                    userId: user._id
+                })
+            })
+
+            it('should fill out duration', async function () {
+                await track.save()
+                expect(track.duration).to.equal(0)
+            })
+        })
     })
 
     describe('required fields', function () {
