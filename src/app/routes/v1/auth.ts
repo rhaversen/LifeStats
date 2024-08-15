@@ -4,10 +4,10 @@
 import Router from 'express'
 
 // Own modules
-import asyncErrorHandler from '../utils/asyncErrorHandler.js'
+import asyncErrorHandler from '../../utils/asyncErrorHandler.js'
 
 // Controller functions
-import { ensureAuthenticated, loginUserLocal, logoutUser } from '../controllers/authController.js'
+import { ensureAuthenticated, loginUserLocal, logoutUser } from '../../controllers/v1/authController.js'
 
 // Destructuring and global variables
 const router = Router()

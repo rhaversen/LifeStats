@@ -5,9 +5,9 @@ import passport from 'passport'
 import { type NextFunction, type Request, type Response } from 'express'
 
 // Own modules
-import config from '../utils/setupConfig.js'
-import logger from '../utils/logger.js'
-import { type IUser } from '../models/User.js'
+import config from '../../utils/setupConfig.js'
+import logger from '../../utils/logger.js'
+import { type IUser } from '../../models/User.js'
 
 // Config
 const {

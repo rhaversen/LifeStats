@@ -8,9 +8,9 @@ import { expect } from 'chai'
 import { type Response } from 'superagent'
 
 // Own modules
-import { chaiAppServer as agent } from '../../testSetup.js'
-import UserModel, { type IUser } from '../../../app/models/User.js'
-import TrackModel, { type ITrack } from '../../../app/models/Track.js'
+import { chaiAppServer as agent } from '../../../testSetup.js'
+import UserModel, { type IUser } from '../../../../app/models/User.js'
+import TrackModel, { type ITrack } from '../../../../app/models/Track.js'
 
 describe('POST api/v1/tracks', function () {
     describe('Post a new track', function () {

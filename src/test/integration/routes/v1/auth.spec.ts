@@ -9,9 +9,9 @@ import sinon from 'sinon'
 import mongoose from 'mongoose'
 
 // Own modules
-import { chaiAppServer as agent } from '../../testSetup.js'
-import UserModel, { type IUser } from '../../../app/models/User.js'
-import config from '../../../app/utils/setupConfig.js'
+import { chaiAppServer as agent } from '../../../testSetup.js'
+import UserModel, { type IUser } from '../../../../app/models/User.js'
+import config from '../../../../app/utils/setupConfig.js'
 
 // Config
 const {

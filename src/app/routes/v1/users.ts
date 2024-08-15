@@ -4,10 +4,10 @@
 import Router from 'express'
 
 // Own modules
-import asyncErrorHandler from '../utils/asyncErrorHandler.js'
+import asyncErrorHandler from '../../utils/asyncErrorHandler.js'
 
 // Controller functions
-import { createUser, deleteUser, createAccessToken, requestPasswordResetEmail, resetPassword } from '../controllers/userController.js'
+import { createUser, deleteUser, createAccessToken, requestPasswordResetEmail, resetPassword } from '../../controllers/v1/userController.js'
 
 // Destructuring and global variables
 const router = Router()

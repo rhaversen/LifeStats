@@ -4,9 +4,9 @@
 import { type NextFunction, type Request, type Response } from 'express'
 
 // Own modules
-import TrackModel from '../models/Track.js'
-import { type IUser } from '../models/User.js'
-import logger from '../utils/logger.js'
+import TrackModel from '../../models/Track.js'
+import { type IUser } from '../../models/User.js'
+import logger from '../../utils/logger.js'
 
 export async function getTracksWithQuery (req: Request, res: Response, next: NextFunction): Promise<void> {
     logger.silly('Fetching tracks with query')

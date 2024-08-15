@@ -4,10 +4,10 @@
 import Router from 'express'
 
 // Own modules
-import asyncErrorHandler from '../utils/asyncErrorHandler.js'
+import asyncErrorHandler from '../../utils/asyncErrorHandler.js'
 
 // Controller functions
-import { createTrack, deleteLastTrack } from '../controllers/tracksController.js'
+import { createTrack, deleteLastTrack } from '../../controllers/v1/tracksController.js'
 
 // Destructuring and global variables
 const router = Router()

@@ -4,17 +4,17 @@
 import Router from 'express'
 
 // Own modules
-import asyncErrorHandler from '../utils/asyncErrorHandler.js'
+import asyncErrorHandler from '../../utils/asyncErrorHandler.js'
 
 // Controller functions
-import { ensureAuthenticated } from '../controllers/authController.js'
-import { getTracksWithQuery } from '../controllers/userTracksController.js'
+import { ensureAuthenticated } from '../../controllers/v1/authController.js'
+import { getTracksWithQuery } from '../../controllers/v2/tracksController.js'
 
 // Destructuring and global variables
 const router = Router()
 
 /**
- * @route GET api/v1/users/tracks
+ * @route GET api/v2/tracks
  * @desc Get tracks with a query
  * @access Private
  * @param {string} req.query.trackType The tracks to be fetched.

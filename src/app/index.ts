@@ -22,11 +22,11 @@ import globalErrorHandler from './middleware/globalErrorHandler.js'
 import configurePassport from './utils/passportConfig.js'
 
 // Routes
-import userRoutes from './routes/users.js'
-import trackRoutes from './routes/tracks.js'
+import userRoutes from './routes/v1/users.js'
+import trackRoutesV1 from './routes/v1/tracks.js'
 import serviceRoutes from './routes/service.js'
-import authRoutes from './routes/auth.js'
-import userTrackRoutes from './routes/userTracks.js'
+import authRoutes from './routes/v1/auth.js'
+import trackRoutesV2 from './routes/v2/tracks.js'
 
 // Logging environment
 logger.info(`Node environment: ${process.env.NODE_ENV}`)
@@ -90,10 +90,10 @@ const highSensitivityApiLimiter = RateLimit(highSensitivityApiLimiterConfig)
 
 // Use all routes with medium sensitivity rate limiter
 app.use('/v1/users', mediumSensitivityApiLimiter, userRoutes)
-app.use('/v1/tracks', mediumSensitivityApiLimiter, trackRoutes)
+app.use('/v1/tracks', mediumSensitivityApiLimiter, trackRoutesV1)
 app.use('/service', mediumSensitivityApiLimiter, serviceRoutes)
 app.use('/v1/auth', mediumSensitivityApiLimiter, authRoutes)
-app.use('/v1/users/tracks', mediumSensitivityApiLimiter, userTrackRoutes)
+app.use('/v2/tracks', mediumSensitivityApiLimiter, trackRoutesV2)
 
 // Apply stricter rate limiters to routes
 app.use('/v1/users/', highSensitivityApiLimiter)
@@ -102,7 +102,7 @@ app.use('/v1/auth/', highSensitivityApiLimiter)
 // Apply medium sensitivity for all database operation routes
 app.use('/v1/users', mediumSensitivityApiLimiter)
 app.use('/v1/tracks', mediumSensitivityApiLimiter)
-app.use('/v1/users/tracks', mediumSensitivityApiLimiter)
+app.use('/v2/tracks', mediumSensitivityApiLimiter)
 
 // Apply low sensitivity for service routes
 app.use('/service', veryLowSensitivityApiLimiter)

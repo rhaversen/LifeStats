@@ -5,9 +5,9 @@ import { type NextFunction, type Request, type Response } from 'express'
 import mongoose from 'mongoose'
 
 // Own modules
-import UserModel from '../models/User.js'
-import logger from '../utils/logger.js'
-import { sendEmailNotRegisteredEmail, sendPasswordResetEmail } from '../utils/mailer.js'
+import UserModel from '../../models/User.js'
+import logger from '../../utils/logger.js'
+import { sendEmailNotRegisteredEmail, sendPasswordResetEmail } from '../../utils/mailer.js'
 
 export async function createUser (req: Request, res: Response, next: NextFunction): Promise<void> {
     logger.silly('Creating user')

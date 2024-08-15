@@ -5,9 +5,9 @@ import { type NextFunction, type Request, type Response } from 'express'
 import mongoose from 'mongoose'
 
 // Own modules
-import TrackModel from '../models/Track.js'
-import UserModel from '../models/User.js'
-import logger from '../utils/logger.js'
+import TrackModel from '../../models/Track.js'
+import UserModel from '../../models/User.js'
+import logger from '../../utils/logger.js'
 
 export async function createTrack (req: Request, res: Response, next: NextFunction): Promise<void> {
     logger.silly('Creating track')
