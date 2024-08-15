@@ -21,12 +21,14 @@ import { sentryInit } from './utils/sentry.js'
 import globalErrorHandler from './middleware/globalErrorHandler.js'
 import configurePassport from './utils/passportConfig.js'
 
-// Routes
-import userRoutes from './routes/v1/users.js'
-import trackRoutesV1 from './routes/v1/tracks.js'
-import serviceRoutes from './routes/service.js'
+// Business logic routes
 import authRoutes from './routes/v1/auth.js'
+import trackRoutesV1 from './routes/v1/tracks.js'
 import trackRoutesV2 from './routes/v2/tracks.js'
+import userRoutes from './routes/v1/users.js'
+
+// Service routes
+import serviceRoutes from './routes/service.js'
 
 // Logging environment
 logger.info(`Node environment: ${process.env.NODE_ENV}`)
@@ -89,22 +91,22 @@ const mediumSensitivityApiLimiter = RateLimit(mediumSensitivityApiLimiterConfig)
 const highSensitivityApiLimiter = RateLimit(highSensitivityApiLimiterConfig)
 
 // Use all routes with medium sensitivity rate limiter
-app.use('/v1/users', mediumSensitivityApiLimiter, userRoutes)
-app.use('/v1/tracks', mediumSensitivityApiLimiter, trackRoutesV1)
-app.use('/service', mediumSensitivityApiLimiter, serviceRoutes)
 app.use('/v1/auth', mediumSensitivityApiLimiter, authRoutes)
+app.use('/v1/tracks', mediumSensitivityApiLimiter, trackRoutesV1)
 app.use('/v2/tracks', mediumSensitivityApiLimiter, trackRoutesV2)
+app.use('/v1/users', mediumSensitivityApiLimiter, userRoutes)
+app.use('/service', mediumSensitivityApiLimiter, serviceRoutes)
 
 // Apply stricter rate limiters to routes
 app.use('/v1/users/', highSensitivityApiLimiter)
 app.use('/v1/auth/', highSensitivityApiLimiter)
 
 // Apply medium sensitivity for all database operation routes
-app.use('/v1/users', mediumSensitivityApiLimiter)
 app.use('/v1/tracks', mediumSensitivityApiLimiter)
 app.use('/v2/tracks', mediumSensitivityApiLimiter)
+app.use('/v1/users', mediumSensitivityApiLimiter)
 
-// Apply low sensitivity for service routes
+// Apply very low sensitivity for service routes
 app.use('/service', veryLowSensitivityApiLimiter)
 
 // The sentry error handler must be registered before any other error middleware and after all controllers
