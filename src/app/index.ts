@@ -71,7 +71,7 @@ app.use(session({ // Session management
     resave: true, // Save the updated session back to the store
     rolling: true, // Reset the cookie max-age on every request
     secret: process.env.SESSION_SECRET,
-    saveUninitialized: true,
+    saveUninitialized: false, // Do not save session if not authenticated
     store: MongoStore.create({
         client: mongoose.connection.getClient() as any,
         autoRemove: 'interval',
