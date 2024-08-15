@@ -14,7 +14,7 @@ import { getTracksWithQuery } from '../controllers/userTracksController.js'
 const router = Router()
 
 /**
- * @route GET api/v1/userTracks
+ * @route GET api/v1/users/tracks
  * @desc Get tracks with a query
  * @access Private
  * @param {string} req.query.trackType The tracks to be fetched.
