@@ -7,8 +7,7 @@ import Router from 'express'
 import asyncErrorHandler from '../utils/asyncErrorHandler.js'
 
 // Controller functions
-import { createTrack, deleteLastTrack, getTracksWithQuery } from '../controllers/tracksController.js'
-import { ensureAuthenticated } from '../controllers/authController.js'
+import { createTrack, deleteLastTrack } from '../controllers/tracksController.js'
 
 // Destructuring and global variables
 const router = Router()
@@ -38,21 +37,6 @@ router.post('/',
  */
 router.delete('/last',
     asyncErrorHandler(deleteLastTrack)
-)
-
-/**
- * @route GET api/v1/tracks
- * @desc Get tracks with a query
- * @access Private
- * @param {string} req.query.trackType The tracks to be fetched.
- * @param {string} req.query.fromDate The starting date of the tracks to be fetched.
- * @param {string} req.query.toDate The ending date of the tracks to be fetched.
- * @return {number} res.status The status code of the HTTP response.
- * @return {object} res.body The fetched tracks.
- */
-router.get('/',
-    ensureAuthenticated,
-    asyncErrorHandler(getTracksWithQuery)
 )
 
 export default router
